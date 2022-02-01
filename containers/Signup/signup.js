@@ -31,7 +31,6 @@ const SignUp = (props) => {
                         </Row>
 
                         <Input
-                            // label="Email"
                             placeholder="Email"
                             value=""
                             type="text"
@@ -39,7 +38,6 @@ const SignUp = (props) => {
                         />
 
                         <Input
-                            // label="Email"
                             placeholder="Passworld"
                             value=""
                             type="text"
@@ -47,7 +45,6 @@ const SignUp = (props) => {
                         />
 
                         <Input
-                            // label="Email"
                             placeholder="Confirm Password"
                             value=""
                             type="text"

@@ -20,7 +20,7 @@ const Header = (props) => {
                         <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
                         </NavDropdown> */}
                     </Nav>
-                    <Nav>
+                    <Nav> 
                         <li className="nav-item">
                             <Link to="/signin" className="nav-link">Sign In</Link>
                         </li>
