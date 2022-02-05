@@ -1,6 +1,5 @@
 export const authConstants  = {
     LOGIN_REQUEST: 'LOGIN_REQUEST',
-    payload: {
-        login: true,
-    }
+    LOGIN_FAILURE: 'LOGIN_FAILURE',
+    LOGIN_SUCCESS: 'LOGIN_SUCCESS'
 }

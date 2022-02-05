@@ -1,27 +1,38 @@
-import React from 'react';
+import {useEffect, useState} from 'react';
 import {Form, Button, Container, Row, Col} from 'react-bootstrap';
 import Layout from '../../components/Layout/index';
 import Input from '../../components/UI/Input/input';
-import { login } from '../../actions/auth.actions';
-import { useDispatch } from 'react-redux';
+import { isUserLoggendIn, login } from '../../actions/auth.actions';
+import { useDispatch, useSelector } from 'react-redux';
+import { Navigate } from 'react-router-dom';
+// import Home from '../../containers/Home/home';
 
 const SignIn = (props) => {
 
-    const dispatch = useDispatch();
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [error, serError] = useState('');
+    const auth = useSelector(state => state.auth);
 
+    const dispatch = useDispatch();
+    
     const userLogin = (e) => {
 
         e.preventDefault();
 
         const user = {
-            email: 'vinh123456@gmial.com',
-            password: '123456'
+            email,
+            password
         }
         
         dispatch(login(user));
     }
 
-    return (
+    if(auth.authenticate){
+        return <Navigate to={`/`}/>
+    }
+
+    return (    
         <Layout>
             <Container>
                 <Row style={{ marginTop: '50px'}}>  
@@ -29,15 +40,15 @@ const SignIn = (props) => {
                         <Form onSubmit={userLogin}>
                             <Input 
                                 placeholder="Email"
-                                value=""
+                                value={email}
                                 type="email"
-                                onChange={() => {}}
+                                onChange={(e) => setEmail(e.target.value)}
                             />
                             <Input 
                                 placeholder="Password"
-                                value=""
+                                value={password}
                                 type="password"
-                                onChange={() => {}}
+                                onChange={(e) => setPassword(e.target.value)}
                             />
                             {/* <Form.Group className="mb-3" controlId="formBasicCheckbox">
                                 <Form.Check type="checkbox" label="Check me out" />
@@ -47,7 +58,7 @@ const SignIn = (props) => {
                                 Submit
                             </Button>
                         </Form>
-                </Col>
+                    </Col>
                 </Row>
             </Container>
         </Layout>

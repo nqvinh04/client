@@ -3,20 +3,34 @@ import './App.css';
 import Home from './containers/Home/home';
 import SignIn from './containers/Signin/signin';
 import SignUp from './containers/Signup/signup';
-import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { Route, Routes } from 'react-router-dom';
+import PrivateRoute from './components/HOC/PrivateRoute';
+import {isUserLoggendIn} from './actions/auth.actions';
+import { useDispatch, useSelector } from 'react-redux';
  
 function App() {
+
+    const dispatch = useDispatch();
+    const auth = useSelector(state => state.auth);    
+
+    useEffect(() => {
+        if(!auth.authenticate){
+            dispatch(isUserLoggendIn());
+        }
+    },[]);
+
     return (
-        <Router>
-            <div className="App">
-                <Routes>
-                    <Route path="/" exact element={<Home/>} />
-                    <Route path="/signin" element={<SignIn/>} />
-                    <Route path="/signup" element={<SignUp/>} />
-                </Routes>
-            </div>
-        </Router>
+        <div className="App">
+            <Routes>
+                <Route exact path='/' element={<PrivateRoute/>}>
+                    <Route exact path='/' element={<Home/>}/>
+                </Route>
+                {/* <PrivateRoute exact path='/' element={<Home/>}/> */}
+                <Route path="/signin" element={<SignIn/>} />
+                <Route path="/signup" element={<SignUp/>} />
+            </Routes>
+        </div>  
     );
 }
 

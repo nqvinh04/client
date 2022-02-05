@@ -4,6 +4,7 @@ import {Container} from 'react-bootstrap';
 
 
 const Layout = (props) => {
+    // console.log('props_Layout', props)
     return (
         <>
             <Header />

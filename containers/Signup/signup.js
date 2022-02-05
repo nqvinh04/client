@@ -2,8 +2,17 @@ import React from 'react';
 import { Container , Form, Row, Button, Col} from 'react-bootstrap';
 import Layout from '../../components/Layout/index';
 import Input from '../../components/UI/Input/input';
+import { Navigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 const SignUp = (props) => {
+
+    const auth = useSelector(state => state.auth)
+
+    if(auth.authenticate){
+        return <Navigate to={`/`}/>
+    }
+    
     return (
         <Layout>
             <Container md={{span: 6, offset: 3}} style={{ marginTop: '50px' }}>
