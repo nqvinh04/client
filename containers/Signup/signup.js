@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Container , Form, Row, Button, Col} from 'react-bootstrap';
 import Layout from '../../components/Layout/index';
 import Input from '../../components/UI/Input/input';
@@ -7,7 +7,16 @@ import { useSelector } from 'react-redux';
 
 const SignUp = (props) => {
 
-    const auth = useSelector(state => state.auth)
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [error, setError] = useState('');
+    const auth = useSelector(state => state.auth);
+
+    const userSignup = () => {
+
+    }
 
     if(auth.authenticate){
         return <Navigate to={`/`}/>
@@ -16,14 +25,15 @@ const SignUp = (props) => {
     return (
         <Layout>
             <Container md={{span: 6, offset: 3}} style={{ marginTop: '50px' }}>
+                { user.message }
                 <Col md={{span: 6, offset: 3}}>
-                    <Form>
+                    <Form onSubmit={ userSignup }>
                         <Row className="mb-3">
                             <Col md={6} >
                                 <Input
                                     // label="First Name"
                                     placeholder="First Name"
-                                    value=""
+                                    value={firstName}
                                     type="text"
                                     onChange={() => {}} 
                                 />
@@ -32,7 +42,7 @@ const SignUp = (props) => {
                                 <Input
                                     // label="Last Name"
                                     placeholder="Last Name"
-                                    value=""
+                                    value={lastName}
                                     type="text"
                                     onChange={() => {}} 
                                 />
@@ -41,21 +51,21 @@ const SignUp = (props) => {
 
                         <Input
                             placeholder="Email"
-                            value=""
+                            value={email}
                             type="text"
                             onChange={() => {}} 
                         />
 
                         <Input
                             placeholder="Passworld"
-                            value=""
+                            value={password}
                             type="text"
                             onChange={() => {}} 
                         />
 
                         <Input
                             placeholder="Confirm Password"
-                            value=""
+                            value=''
                             type="text"
                             onChange={() => {}} 
                         />
