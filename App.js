@@ -8,6 +8,8 @@ import { Route, Routes } from 'react-router-dom';
 import PrivateRoute from './components/HOC/PrivateRoute';
 import {isUserLoggendIn} from './actions/auth.actions';
 import { useDispatch, useSelector } from 'react-redux';
+import Products from './containers/Products/products';
+import Orders from './containers/Orders/orders';
  
 function App() {
 
@@ -25,6 +27,12 @@ function App() {
             <Routes>
                 <Route exact path='/' element={<PrivateRoute/>}>
                     <Route exact path='/' element={<Home/>}/>
+                </Route>
+                <Route exact path='/products' element={<PrivateRoute/>}>
+                    <Route exact path='/products' element={<Products/>}/>
+                </Route>
+                <Route exact path='/orders' element={<PrivateRoute/>}>
+                    <Route exact path='/orders' element={<Orders/>}/>
                 </Route>
                 {/* <PrivateRoute exact path='/' element={<Home/>}/> */}
                 <Route path="/signin" element={<SignIn/>} />

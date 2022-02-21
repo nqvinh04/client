@@ -25,7 +25,7 @@ const SignUp = (props) => {
     return (
         <Layout>
             <Container md={{span: 6, offset: 3}} style={{ marginTop: '50px' }}>
-                { user.message }
+                {/* { user.message } */}
                 <Col md={{span: 6, offset: 3}}>
                     <Form onSubmit={ userSignup }>
                         <Row className="mb-3">
