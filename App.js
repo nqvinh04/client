@@ -15,8 +15,8 @@ import Category from './containers/Category/category';
 function App() {
 
     const dispatch = useDispatch();
-    const auth = (state => state.auth);    
-    
+    const auth = useSelector(state => state.auth);    
+
     useEffect(() => {
         if(!auth.authenticate){
             dispatch(isUserLoggendIn());
