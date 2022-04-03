@@ -3,8 +3,6 @@ import { authConstants } from "./constants";
 
 export const login = (user) => {
 
-    console.log('user', user);
-
     return async (dispatch) => {
 
         dispatch({ type: authConstants.LOGIN_REQUEST });
@@ -13,8 +11,8 @@ export const login = (user) => {
             ...user
         });
 
-        if(res.status === 200){
-            const { token, user } = res.data;
+        if(res.status === 200){ 
+            const {token, user} = res.data;
             localStorage.setItem('token', token);
             localStorage.setItem('user', JSON.stringify(user))
             dispatch({

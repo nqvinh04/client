@@ -10,12 +10,13 @@ import {isUserLoggendIn} from './actions/auth.actions';
 import { useDispatch, useSelector } from 'react-redux';
 import Products from './containers/Products/products';
 import Orders from './containers/Orders/orders';
+import Category from './containers/Category/category';
  
 function App() {
 
     const dispatch = useDispatch();
-    const auth = useSelector(state => state.auth);    
-
+    const auth = (state => state.auth);    
+    
     useEffect(() => {
         if(!auth.authenticate){
             dispatch(isUserLoggendIn());
@@ -27,6 +28,9 @@ function App() {
             <Routes>
                 <Route exact path='/' element={<PrivateRoute/>}>
                     <Route exact path='/' element={<Home/>}/>
+                </Route>
+                <Route exact path='/categories' element={<PrivateRoute/>}>
+                    <Route exact path='/categories' element={<Category/>}/>
                 </Route>
                 <Route exact path='/products' element={<PrivateRoute/>}>
                     <Route exact path='/products' element={<Products/>}/>
