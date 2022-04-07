@@ -17,6 +17,7 @@ const Products = (props) => {
     const [productPictures, setProductPictures] = useState([]);
     const [show, setShow] = useState(false);
     const category = useSelector((state) => state.categories);
+    const product = useSelector((state) => state.product);
     const dispatch = useDispatch();
 
     const handleAddProduct = () => {
@@ -45,77 +46,42 @@ const Products = (props) => {
         ]);
     }
 
-    const createCategoryList = (categories, options = []) => {
-
-        for(let category of categories){
-            options.push({ value: category._id, name: category.name});
-            if(category.children.length > 0){
-                createCategoryList(category.children, options)
-            }
-        }
-        return options;
+    const renderProducts = () => {
+        console.log('Product', product)
+        return (
+            <Table responsive="sm"> 
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Name</th>
+                        <th>Price</th>
+                        <th>Quantity</th>
+                        <th>Description</th>
+                        <th>Category</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {
+                        product.products.length > 0 ?
+                        product.products.map(product => 
+                            <tr key={product._id}>
+                                <td>1</td>
+                                <td>{product.name}</td>
+                                <td>{product.price}</td>
+                                <td>{product.quantity}</td>
+                                <td>{product.description}</td>
+                                <td>{product.category}</td>
+                            </tr>
+                        ) : null
+                    }
+                    
+                </tbody>
+            </Table>
+        )
     }
 
-
-    return (
-        <Layout sidebar>
-            <Container>
-                <Row>
-                    <Col md={12}>
-                        <div style={{ display: "flex", justifyContent: "space-between" }}>
-                        <h3 onClick={handleShow}>Product</h3>
-                        <button onClick={handleShow}>Add</button>
-                        </div>
-                    </Col>
-                </Row>
-                <Row>
-                    <Col>
-                        <Table responsive="sm">
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>Table heading</th>
-                                    <th>Table heading</th>
-                                    <th>Table heading</th>
-                                    <th>Table heading</th>
-                                    <th>Table heading</th>
-                                    <th>Table heading</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td>Table cell</td>
-                                    <td>Table cell</td>
-                                    <td>Table cell</td>
-                                    <td>Table cell</td>
-                                    <td>Table cell</td>
-                                    <td>Table cell</td>
-                                </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>Table cell</td>
-                                    <td>Table cell</td>
-                                    <td>Table cell</td>
-                                    <td>Table cell</td>
-                                    <td>Table cell</td>
-                                    <td>Table cell</td>
-                                </tr>
-                                <tr>
-                                    <td>3</td>
-                                    <td>Table cell</td>
-                                    <td>Table cell</td>
-                                    <td>Table cell</td>
-                                    <td>Table cell</td>
-                                    <td>Table cell</td>
-                                    <td>Table cell</td>
-                                </tr>
-                            </tbody>
-                        </Table>
-                    </Col>
-                </Row>
-            </Container>
-            
+    const renderAddProductModal = () => {
+        return (
             <Modal
                 show={show}
                 handleClose={handleAddProduct}
@@ -173,6 +139,40 @@ const Products = (props) => {
                     onChange={handleProductImage}
                 />
             </Modal>
+        )
+    }
+
+    const createCategoryList = (categories, options = []) => {
+
+        for(let category of categories){
+            options.push({ value: category._id, name: category.name});
+            if(category.children.length > 0){
+                createCategoryList(category.children, options)
+            }
+        }
+        return options;
+    }
+
+
+    return (
+        <Layout sidebar>
+            <Container>
+                <Row>
+                    <Col md={12}>
+                        <div style={{ display: "flex", justifyContent: "space-between" }}>
+                        <h3 onClick={handleShow}>Product</h3>
+                        <button onClick={handleShow}>Add</button>
+                        </div>
+                    </Col>
+                </Row>
+                <Row>
+                    <Col>
+                        {renderProducts()}
+                    </Col>
+                </Row>
+            </Container>
+            {renderAddProductModal()}
+            
         </Layout>
     )
 }

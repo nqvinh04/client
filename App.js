@@ -11,6 +11,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Products from './containers/Products/products';
 import Orders from './containers/Orders/orders';
 import Category from './containers/Category/category';
+import { getInitialData } from './actions/initialData.action';
  
 function App() {
 
@@ -21,6 +22,7 @@ function App() {
         if(!auth.authenticate){
             dispatch(isUserLoggendIn());
         }
+        dispatch(getInitialData())
     },[]);
 
     return (
