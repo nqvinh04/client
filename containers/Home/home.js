@@ -2,7 +2,6 @@ import './home.css';
 import React, { useEffect } from 'react';
 import Layout from '../../components/Layout/index';
 import {Row, Col, Container} from 'react-bootstrap';
-import './home.css';
 import { NavLink } from 'react-router-dom';
 
 

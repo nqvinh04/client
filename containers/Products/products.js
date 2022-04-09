@@ -5,6 +5,8 @@ import { addProdcut } from "../../actions/product.actions";
 import Layout from "../../components/Layout";
 import Input from "../../components/UI/Input/input";
 import Modal from "../../components/UI/Modal";
+import { generatePublicUrl } from "../../urlConfig";
+import './products.css';
 
 
 const Products = (props) => {
@@ -16,8 +18,10 @@ const Products = (props) => {
     const [categoryId, setCategoryId] = useState('');
     const [productPictures, setProductPictures] = useState([]);
     const [show, setShow] = useState(false);
+    const [productDetailModal, setProductDetailModal] = useState(false);
+    const [productDetails, setProductDetail] = useState(null);
     const category = useSelector((state) => state.categories);
-    const product = useSelector((state) => state.product);
+    const product = useSelector((state) => state.products);
     const dispatch = useDispatch();
 
     const handleAddProduct = () => {
@@ -49,28 +53,29 @@ const Products = (props) => {
     const renderProducts = () => {
         console.log('Product', product)
         return (
-            <Table responsive="sm"> 
+            <Table style={({ fontSize:12  })} responsive="sm"> 
                 <thead>
                     <tr>
                         <th>#</th>
                         <th>Name</th>
                         <th>Price</th>
                         <th>Quantity</th>
-                        <th>Description</th>
+                        {/* <th>Description</th> */}
                         <th>Category</th>
                     </tr>
                 </thead>
                 <tbody>
                     {
                         product.products.length > 0 ?
-                        product.products.map(product => 
-                            <tr key={product._id}>
+                        product.products.map(pro => 
+                            <tr onClick={() => showProductDetailsModal(pro)} key={product._id}>
                                 <td>1</td>
-                                <td>{product.name}</td>
-                                <td>{product.price}</td>
-                                <td>{product.quantity}</td>
-                                <td>{product.description}</td>
-                                <td>{product.category}</td>
+                                <td>{pro.name}</td>
+                                <td>{pro.price}</td>
+                                <td>{pro.quantity}</td>
+                                <td>--</td>
+                                {/* <td>{product.description}</td>
+                                <td>{product.category}</td> */}
                             </tr>
                         ) : null
                     }
@@ -142,6 +147,78 @@ const Products = (props) => {
         )
     }
 
+    const handleCloseProductDetailsModal = () => {
+        setProductDetailModal(false);
+    }
+
+    const showProductDetailsModal = (product) => {
+        setProductDetail(product)
+        setProductDetailModal(true);
+        console.log(1111111, product);
+        console.log(2222222, product);
+    }
+
+    const renderProductDetailsModal = () => {
+        if(!productDetails) {
+            return null;
+        }
+        console.log('productDetails', productDetails)
+
+        return (
+            <Modal
+                show={productDetailModal}
+                handleClose={() => handleCloseProductDetailsModal()}
+                modalTitle={'Product Details'}
+                size="lg"
+            >
+                <Row>
+                    <Col md="6">
+                        <label className="key">Name: </label>
+                        <span className="value">{productDetails.name}</span>
+                    </Col>
+                </Row>
+                <Row>
+                    <Col md="6">
+                        <label className="key">price: </label>
+                        <span className="value">{productDetails.price}</span>
+                    </Col>
+                </Row>
+                <Row>
+                    <Col md="6">
+                        <label className="key">Quantity: </label>
+                        <span className="value">{productDetails.quantity}</span>
+                    </Col>
+                </Row>
+                {/* <Row>
+                    <Col md="6">
+                        <label className="key">Category: </label>
+                        <span className="value">{productDetails.category.name}</span>
+                    </Col>
+                </Row> */}
+                <Row>
+                    <Col md="12">
+                        <label className="key">Description: </label>
+                        <span className="value">{productDetails.description}</span>
+                    </Col>
+                </Row>
+                <Row>
+                    <Col>
+                        <label className="key">Product Pictures</label>
+                        <div style={{display: 'flex'}}>
+                            {productDetails.productPictures.map((picture) => (
+                                <div className="productImgContainer">
+                                    <img alt="IMG" src={generatePublicUrl(picture.img)} />
+                                </div>
+                            ))}
+                        </div>
+                    </Col>
+                </Row>
+            </Modal>
+        )
+    }
+
+    
+
     const createCategoryList = (categories, options = []) => {
 
         for(let category of categories){
@@ -172,7 +249,7 @@ const Products = (props) => {
                 </Row>
             </Container>
             {renderAddProductModal()}
-            
+            {renderProductDetailsModal()}
         </Layout>
     )
 }

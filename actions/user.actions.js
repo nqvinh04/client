@@ -24,7 +24,7 @@ export const signup = (user) => {
         } else {
             if(res.status === 400){
                 dispatch({
-                    type: authConstants.USER_REGISTER_FAILURE,
+                    type: userContants.USER_REGISTER_FAILURE,
                     payload: {
                         error: res.data.error,
                     }
